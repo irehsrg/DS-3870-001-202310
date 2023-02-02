@@ -15,20 +15,20 @@
                     <div class="col-12 col-md-6 col-lg-4 card">
                         <div class="card=head">
                             <h3 class="text-center pt-3">Register</h3>
-                                </div>
-                                    <h4 class="d-none d-md-block text-center">Fill me out</h4>
-                                        <div class="card-body">
-                                            <form>
-                                            <label for= "txtFirstName" class="form-lable">First name</label>
-                                            <input id="txtFirstName" class="form-control">
-                                            <label for= "txtLastName" class="form-lable">Last Name</label>
-                                            <input id="txtLastName" class="form-control">
-                                            <label for= "txtEmail" class="form-lable">Email</label>
-                                            <input id="txtEmail" type="email" class="form-control">
-                                            <label for= "txtPassword" class="form-lable">Password</label>
-                                            <input id="txtPassword" type="password" class="form-control">
-                                            <button type="button" class="btn btn-danger col-12 mt-3" id="btnSubmit">Submit</button>
-                                            </form>
+                            <h4 class="d-none d-md-block text-center">Fill me out</h4>
+                        </div>
+                            <div class="card-body">
+                                <form>
+                                    <label for= "txtFirstName" class="form-lable">First name</label>
+                                    <input id="txtFirstName" class="form-control">
+                                    <label for= "txtLastName" class="form-lable">Last Name</label>
+                                    <input id="txtLastName" class="form-control">
+                                    <label for= "txtEmail" class="form-lable">Email</label>
+                                    <input id="txtEmail" type="email" class="form-control">
+                                    <label for= "txtPassword" class="form-lable">Password</label>
+                                    <input id="txtPassword" type="password" class="form-control">
+                                    <button type="button" class="btn btn-danger col-12 mt-3" id="btnSubmit">Submit</button>
+                                </form>
                 </div>
             </div>
         </div>
@@ -54,6 +54,12 @@
     // Retrieve the value of the input with the id of txtPassword
     $('#txtPassword').val();
 
+    var arrTest = [];
+
+    function doesInclude(arrItems, strCheck){
+        return arrItems.includes(strCheck)
+    }
+
     $('#btnSubmit').click(function(){
         let strFName = $('#txtFirstName').val();
         let intFirstNameLength = $('#txtFirstName').val().length;
@@ -70,6 +76,10 @@
 
         //var blnErrorFound = false;
         var strErrorMessage = '';
+
+        arrTest.push('apple');
+        arrTest.push('pear');
+        arrTest.push('orange');
 
         if(intFirstNameLength < 1){
             //blnErrorFound = true;
@@ -96,6 +106,9 @@
             alert(strErrorMessage)
         }
 
+        if(arrTest.includes('pear')){
+            console.log('It includes pear')
+        }
 
         // Username: ..... | Password: ....
         //alert('FirstName: ' + strFName + ' | LastName: ' + strLName + ' | Username: ' + strEmail + ' | Password: ' + strPassword)
