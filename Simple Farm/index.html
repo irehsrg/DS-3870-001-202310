@@ -55,8 +55,8 @@
         })
 
         $('#btnSearch').on('click', function(){
-            let strSearch = $('txtSearch').val();
-            let strSessionID = sessionStorage.setItem('SimpleFarmSession', result.SessionID);
+            let strSearch = $('#txtSearch').val();
+            let strSessionID = sessionStorage.getItem('SimpleFarmSession')
             $.getJSON('https://simplefarm.thesimplehomestead.com/api/animals.php', {SessionID : strSessionID, AnimalType : strSearch}, function(results){
                 console.table(results)
             })
