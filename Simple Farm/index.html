@@ -8,59 +8,96 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css">
     </head>
-    <body class="bg-warning"> 
-        <div class="col-12 d-flex justify-content-center align-items-center vh-100"> 
-            <div class="card col-11 col-md-4 col-lg-2">
-                <div class="card-body" id='divLogin'> 
-                    <form> 
-                        <label for="txtEmail" class="form-label">Email Address</label> 
-                        <input id="txtEmail" type="email" class="form-control mb-1"> 
-                        <label for="txtPassword" class="form-label">Password</label> 
-                        <input id="txtPassword" class="form-control" type="password"> 
-                        <button class="btn btn-primary col-12 mt-3" id="btnLogin" type="button">Login</button> 
-                        <button class="btn btn-secondary col-12 mt-1" id="btnRegister" type="button">Register</button> 
-                    </form> 
+        <body class="bg-warning"> 
+            <div class="col-12 d-flex justify-content-center align-items-center vh-100"> 
+                <div class="card col-11 col-md-4 col-lg-2" id="divLogin"> 
+                    <div class="card-body"> 
+                        <form> 
+                            <label for="txtEmail" class="form-label">Email Address</label> 
+                            <input id="txtEmail" type="email" class="form-control mb-1"> 
+                            <label for="txtPassword" class="form-label">Password</label> 
+                            <input id="txtPassword" class="form-control" type="password"> 
+                            <button class="btn btn-primary col-12 mt-3" id="btnLogin" type="button">Login</button> 
+                            <button class="btn btn-secondary col-12 mt-1" id="btnRegister" type="button">Register</button> 
+                        </form> 
+                    </div> 
                 </div> 
-        </div>  
-        <div class="card-body" id="divFarmSearch" style="display : none;"> 
-            <form>
-                <label for="txtSearch" class="form-label">Password</label> 
-                <input id="txtSearch" class="form-control" type="password"> 
-                <button class="btn btn-primary col-12 mt-3" id="btnSearch" type="button">Login</button> 
-            </form>
-        </div>
-        </div> 
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> 
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script> 
-    <script> 
-        $('#btnLogin').on('click', function(){
-            console.log('Login Button Clicked');
-            let strEmail = $('#txtEmail').val();
-            let strPassword = $('#txtPassword').val();
-            console.log(strEmail);
-            console.log(strPassword);
-            $.post('https://simplefarm.thesimplehomestead.com/api/sessions.php', {Email : strEmail, Password : strPassword}, function(result){
-                console.log(result)
-                if(result){
-                result = JSON.parse(result)
-                console.log(result.SessionID)
-                sessionStorage.setItem('SimpleFarmSession', result.SessionID);
-                console.log(sessionStorage.getItem('SimpleFarmSession'));
-                $('#divLogin').slideToggle();
-                $('#divFarmSearch').slideToggle();
-            }
-            })
-        })
+                <div class="card col-11 col-md-4 col-lg-2" style="display : none;" id="divFarmSearch"> 
+                    <div class="card-body"> 
+                        <form>
+                            <label for="txtSearch" class="form-label">Search</label> 
+                            <input id="txtSearch" class="form-control" type="text"> 
+                            <button class="btn btn-primary col-12 mt-3" id="btnSearch" type="button">Search</button> 
+                        </form>
+                        <table class="col-12 table" id="tblResults">
+                            <thead>                            
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>
 
-        $('#btnSearch').on('click', function(){
-            let strSearch = $('#txtSearch').val();
-            let strSessionID = sessionStorage.getItem('SimpleFarmSession')
-            $.getJSON('https://simplefarm.thesimplehomestead.com/api/animals.php', {SessionID : strSessionID, AnimalType : strSearch}, function(results){
-                console.table(results)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div> 
+                </div> 
+            </div> 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> 
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script> 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+        <script> 
+
+        $('#txtEmail').val('scruffmcgruff@gmail.com');
+        $('#txtPassword').val('Mickey2022!');
+        $('#txtSearch').val('horse');
+
+
+            $('#btnLogin').on('click', function(){
+                console.log('Login Button Clicked');
+                let strEmail = $('#txtEmail').val();
+                let strPassword = $('#txtPassword').val();
+                console.log(strEmail);
+                console.log(strPassword);
+                $.post('https://simplefarm.thesimplehomestead.com/api/sessions.php', {Email : strEmail, Password : strPassword}, function(result){
+                    console.log(result);
+                    if(result){
+                        result = JSON.parse(result);
+                        console.log(result.SessionID);
+                        sessionStorage.setItem('SimpleFarmSession', result.SessionID);
+                        console.log(sessionStorage.getItem('SimpleFarmSession'));
+                        $('#divLogin').slideToggle();
+                        $('#divFarmSearch').slideToggle();
+                    }          
+                })
             })
-        })
-    </script>
-</body>
+
+            $('#btnSearch').on('click', function(){
+                let txtSearch = $('#txtSearch').val();
+                let strSessionID = sessionStorage.getItem('SimpleFarmSession');
+                $.getJSON('https://simplefarm.thesimplehomestead.com/api/animals.php', {SessionID : strSessionID, AnimalType : txtSearch}, function(result){
+                    $.each(result, function(index, animal){
+                        let strRowHTML = '';
+                        strRowHTML += '<tr>';
+                        strRowHTML += '<td>' + animal.Type + '</td>';
+                        strRowHTML += '<td>' + animal.Name + '</td>';
+                        strRowHTML += '<td><button data-enteredby="'+ animal.EnteredBy +'" data-animalid="'+ animal.AnimalID +'" class="btn btn-secondary btnAnimalInfo" type="button">More Info</button></td>';
+                        strRowHTML += '</tr>';
+                        $('#tblResults tbody').append(strRowHTML);
+                    })                
+                })
+            })
+
+            $(document).on('click', '.btnAnimalInfo',function(){
+                let strEnteredBy = $(this).attr('data-enteredby');
+                let strAnimalID = $(this).attr('data-animalid');
+                console.log(strEnteredBy);
+                alert('I cliked an animal with ID of ' + strAnimalID + ' entered by ' + strEnteredBy);
+            })
+        </script>
+    </body>
 </html>
+
