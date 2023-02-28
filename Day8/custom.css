@@ -1,8 +1,39 @@
 *{
     font-family: 'Source Sans Pro';
+    border-radius: 0 !important;
 }
 
-.form-control:focus {
-    border-color: #0000ff;
-    box-shadow: inset 0 1px 1px rgba(31, 126, 235, 0.075), 0 0 8px rgba(0, 153, 255, 0.6);
+.bg{
+    background-color: #000000;
+    background-image: linear-gradient(to bottom right, #5700f8, #ffee00);
   }
+
+.form-control:focus {
+    border-color: #000000;
+    box-shadow: inset 0 1px 1px rgba(238, 11, 68, 0.74), 0 0 8px rgba(76, 0, 255, 0.6);
+  }
+
+.card-header{
+    color : #6f00ff;
+  }
+
+.btn{
+    color : #ffffff;
+    background-color: #6f00ff;
+    border-style: ;
+  }
+
+.btn:hover{
+    color : #ffffff;
+    background-color: #4f0aaa;
+}
+
+.firstHeader{
+    margin: auto;
+    text-align: center;
+}
+
+.secondHeader{
+    margin: auto;
+    text-align: center;
+}
