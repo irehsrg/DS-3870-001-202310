@@ -4,8 +4,8 @@
 }
 
 .bg{
-    background-color: #000000;
     background-image: linear-gradient(to bottom right, #5700f8, #ffee00);
+    background-attachment: fixed;
   }
 
 .form-control:focus {
