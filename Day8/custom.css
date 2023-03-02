@@ -4,6 +4,7 @@
 }
 
 .bg{
+    background-color: #000000;
     background-image: linear-gradient(to bottom right, #5700f8, #ffee00);
     background-attachment: fixed;
   }
@@ -20,7 +21,6 @@
 .btn{
     color : #ffffff;
     background-color: #6f00ff;
-    border-style: ;
   }
 
 .btn:hover{
@@ -29,11 +29,9 @@
 }
 
 .firstHeader{
-    margin: auto;
     text-align: center;
 }
 
 .secondHeader{
-    margin: auto;
-    text-align: center;
+    text-align: left;
 }
