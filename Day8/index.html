@@ -43,7 +43,7 @@
             let blnError = false;
             let strErrorMessage = '';
 
-            let strBuilding = $('#txtBuilding').val();
+            let strBuilding = $('#txtBuilding').val().toUpperCase();
             if(strBuilding.length < 1){
                 blnError = true;
                 strErrorMessage += "Building cannot be blank";
@@ -85,8 +85,10 @@
                                                 }
                                                 
                                             }
+
                                             let strEndHours = curclass.EndTime.substr(0,2)
                                             let strEndMinutes = curclass.EndTime.substr(2,2) 
+
                                             if(strEndHours < 12){
                                                 strEndTime = (strEndHours + ":" + strEndMinutes + 'am')
                                             }
