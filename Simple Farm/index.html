@@ -24,6 +24,7 @@
                 </div> 
                 <div class="card col-11 col-md-4 col-lg-2" style="display : none;" id="divFarmSearch"> 
                     <div class="card-body"> 
+                        <div id="btnLogout" class="btn btn-danger">Logout</div>
                         <form>
                             <label for="txtSearch" class="form-label">Search</label> 
                             <input id="txtSearch" class="form-control" type="text"> 
@@ -55,6 +56,21 @@
         $('#txtPassword').val('Mickey2022!');
         $('#txtSearch').val('horse');
 
+            $('btnLogout').on('click', function(){
+                let strSessionID = sessionStorage.getItem('SimpleFarmSession');
+                $.ajax({
+                    url :'https://simplefarm.thesimplehomestead.com/api/sessions.php', 
+                    method : 'DELETE', 
+                    data : {
+                        SessionID : strSessionID
+                    },
+                    dataType : 'html'
+                }).done(function(result){
+                    console.log(result);
+                }).fail(function(req, strStatus,error){
+                    consoe.log(jQuery(error).text());
+                })
+            })
 
             $('#btnLogin').on('click', function(){
                 console.log('Login Button Clicked');
@@ -78,6 +94,14 @@
             $('#btnSearch').on('click', function(){
                 let txtSearch = $('#txtSearch').val();
                 let strSessionID = sessionStorage.getItem('SimpleFarmSession');
+                $.ajax({
+                    url : 'https://simplefarm.thesimplehomestead.com/api/sessions.php',
+                    method : 'PUT',
+                    data : {
+                        SessionID : strSessionID
+                    },
+                    dataType: 'html'
+                })
                 $.getJSON('https://simplefarm.thesimplehomestead.com/api/animals.php', {SessionID : strSessionID, AnimalType : txtSearch}, function(result){
                     $.each(result, function(index, animal){
                         let strRowHTML = '';
