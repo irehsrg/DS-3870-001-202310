@@ -5,10 +5,11 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const { json } = require('body-parser');
+const { uuid } = require('uuidv4');
 const pool = mysql.createPool({
     host : 'localhost',
     user : 'root',
-    password : 'Mickey2023!',
+    password : 'Baxterlilbit2003',
     database : 'todo'
 })
 
@@ -19,35 +20,16 @@ app.use(cors());
 app.use(express.json());
 
 app.listen(HTTP_PORT, () => {
-    console.log('Our server is listening on port ' + HTTP_PORT);
+    console.log("Our server is listening on port " + HTTP_PORT);
 })
 
-app.post("/test", (req, res, next) => {
-    res.status(200).send('{"FirstName" : "Post-Alex", "LastName" : "Post-Joines"}');
-})
+app.post("/createAccount", (req, res, next) => {
 
-app.get('/test', (req, res, next) => {
-    pool.query('SELECT * FROM tblusers', function(error, results){
-        if(error){
-            res.status(400).send(JSON.stringify({Error : error}));
-        } else {
-            res.status(200).send(results);
-        }
-    })
-})
-
-app.get('/testCar', (req, res, next) => {
-        res.status(400).send(JSON.stringify({color : 'blue'}));
-    })
+    let strEmail = req.query.Email || req.body.Email;
+    let strPassword = req.query.Password || req.body.Password;
 
 
-
-app.post('/cars', (req, res, next) => {
-
-    let strMake = req.query.make || req.body.make;
-    let strModel = req.query.model || req.body.model;
-
-        pool.query("INSERT INTO tblCars VALUES (?,?)", [strMake, strModel], function(error, results){
+    pool.query("INSERT INTO tblusers VALUES (?,?)",[strEmail,strPassword], function(error, results){
         if(error){
             res.status(400).send(JSON.stringify({Error : error}));
         } else {
@@ -61,8 +43,8 @@ app.post('/cars', (req, res, next) => {
     })
 })
 
-app.get('/cars', (req, res, next) => {
-    pool.query('SELECT * FROM tblCars', function(error, results){
+app.get('/createAccount', (req, res, next) => {
+    pool.query('SELECT * FROM tblusers', function(error, results){
         if(error){
             res.status(400).send(JSON.stringify({Error : error}));
         } else {
@@ -71,6 +53,35 @@ app.get('/cars', (req, res, next) => {
     })
 })
 
-app.get('/test2', (req, res, next) => {
-    res.status(200).send('{"FirstName" : "Johm", "LastName" : "Doe"}');
+app.post('/createTask', (req, res, next) => {
+
+    let strTaskID = uuid();
+    let strTaskTitle = req.query.Title || req.body.Title;
+    let strDescription = req.query.Description || req.body.Description;
+
+    let strDueDate = req.query.DueDate || req.body.DueDate;
+
+
+        pool.query("INSERT INTO tbltasks VALUES (?,?,?,?,'NEW',(SELECT Email FROM tblSessions WHERE SessionID = ?),GETDATE())",[strTaskID,strTaskTitle,strDescription,strSessionID,strDueDate], function(error, results){
+        if(error){
+            res.status(400).send(JSON.stringify({Error : error}));
+        } else {
+            if(results.affectedRows > 0){
+                res.status(200).send(results);
+            } else {
+                res.status(400).send(results);
+            }
+            
+        }
+    })
+})
+
+app.get('/createTask', (req, res, next) => {
+    pool.query('SELECT * FROM tbltasks', function(error, results){
+        if(error){
+            res.status(404).send(JSON.stringify({Error : error}));
+        } else {
+            res.status(200).send(results);
+        }
+    })
 })
