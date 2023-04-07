@@ -53,6 +53,8 @@
                 <input class="form-control" type="txt" id="txtTitle">
                 <label class="form-label mt-3 text-center" for="txtDescription">Enter Task Description:</label>
                 <input class="form-control" type="txt" id="txtDescription">
+                <label class="form-label mt-3 text-center" for="txtDueDate">Enter Task Due Date:</label>
+                <input class="form-control" type="txt" id="txtDueDate">
                 <button class="btn btn-success mt-3 col-12" id="btnTaskCreate" type="button">Create Tast</button>
             </div>
         </div>
@@ -73,10 +75,9 @@
             $('#navBar').slideToggle()
         })
 
-        $('#btnFinalizeCreate').on('click',function(){
+        $('#btnCreateAccount').on('click',function(){
+            $('#todoLogin').slideToggle()
             $('#accountCreate').slideToggle()
-            $('#addBtn').slideToggle()
-            $('#navBar').slideToggle()
         })
 
         $('#btnAdd').on('click',function(){
@@ -84,10 +85,11 @@
         })
 
 
-        $('#btnCreateAccount').on('click',function(){
+        $('#btnFinalizeCreate').on('click',function(){
 
-            $('#todoLogin').slideToggle()
             $('#accountCreate').slideToggle()
+            $('#addBtn').slideToggle()
+            $('#navBar').slideToggle()
 
             let blnError = false
             let blnErrorMessage = ''
@@ -112,7 +114,6 @@
                 })
             } else{
                 $.post('http://localhost:8000/createAccount?Email=' + strEmail + '&Password=' + strPassword, function(result){
-                    result = JSON.parse(result)
                     if(result.Error){
                         Swal.fire({
                             icon: 'error',
@@ -120,19 +121,7 @@
                             html: '<p>User Not Created</p>'
                         })
                     } else{
-                        $.post('http://localhost:8000/createAccount?Email=' + strEmail + '&Password=' + strPassword, function(sessionResult){
-                            sessionResult = JSON.parse(sessionResult)
-                            
-                            if(sessionResult.Error){
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    html: '<p>Session Not Created</p>'
-                                })
-                            } else{
-                                sessionStorage.setItem('SimpleSession', sessionResult.SessionID);
-                            }
-                        })
+                        sessionStorage.setItem('toDoSession', sessionResult.SessionID);
                     }
                 })
             }
@@ -145,7 +134,7 @@
             
             let strTitle = $('#txtTitle').val();
             let strDesc = $('#txtDescription').val();
-            let strDue = $('#txtDue').val();
+            let strDue = $('#txtDueDate').val();
 
             $.post('http://localhost:8000/createTask?Title=' + strTitle + '&Description=' + strDesc + '&DueDate=' + strDue,function(result){
             

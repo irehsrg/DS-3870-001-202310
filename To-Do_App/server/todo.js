@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const { json } = require('body-parser');
-const { uuid } = require('uuidv4');
 const pool = mysql.createPool({
     host : 'localhost',
     user : 'root',
@@ -55,14 +54,12 @@ app.get('/createAccount', (req, res, next) => {
 
 app.post('/createTask', (req, res, next) => {
 
-    let strTaskID = uuid();
     let strTaskTitle = req.query.Title || req.body.Title;
     let strDescription = req.query.Description || req.body.Description;
-
     let strDueDate = req.query.DueDate || req.body.DueDate;
 
 
-        pool.query("INSERT INTO tbltasks VALUES (?,?,?,?,'NEW',(SELECT Email FROM tblSessions WHERE SessionID = ?),GETDATE())",[strTaskID,strTaskTitle,strDescription,strSessionID,strDueDate], function(error, results){
+        pool.query("INSERT INTO tbltasks VALUES (?,?,?)",[strTaskTitle,strDescription,strDueDate], function(error, results){
         if(error){
             res.status(400).send(JSON.stringify({Error : error}));
         } else {
