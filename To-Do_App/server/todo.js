@@ -9,7 +9,7 @@ const pool = mysql.createPool({
     host : 'localhost',
     user : 'root',
     password : 'Mickey2023!',
-    database : 'test'
+    database : 'todo'
 })
 
 const HTTP_PORT =  8000;
